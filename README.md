@@ -8,3 +8,10 @@
 |        Web       |                 Spring Web                 |
 | Template Engines |                  Thymeleaf                 |
 |        SQL       | Spring Data JPA, H2 Database, MySQL Driver |
+
+Dependencies | 
+----- | ----- | -----
+Developer Tools | Spring Boot DevTools, Lombok
+Web | Spring Web
+Template Engines | Thymeleaf
+SQL | Spring Data JPA, H2 Database, MySQL Driver
