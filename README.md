@@ -12,3 +12,11 @@ SQL | Spring Data JPA, H2 Database, MySQL Driver
 
 ### 로그인 기능 구현
 Ajax(JS), Session(Java) 활용
+
+
+### Reference
+1. https://admm.tistory.com/54]
+2. https://jobc.tistory.com/120
+3. http://blog.naver.com/PostView.nhn?blogId=namoyo&logNo=110166980135&parentCategoryNo=82&categoryNo=&viewDate=&isShowPopularPosts=true&from=search
+4. http://www.tcpschool.com/jquery/jq_intro_apply
+5. 
