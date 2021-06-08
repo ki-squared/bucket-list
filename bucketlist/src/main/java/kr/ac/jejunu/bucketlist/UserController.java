@@ -13,13 +13,17 @@ import java.util.Map;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
-
-//    private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
 //    @GetMapping("/list")
 //    public List<User> list() {
 //        return userRepository.findAll();
 //    }
 
+    @GetMapping("/getName")
+    public String getName(HttpSession httpSession) {
+        User user = (User)httpSession.getAttribute("user");
+        return user.getName();
+    }
 
 }
