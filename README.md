@@ -31,6 +31,7 @@ title | varchar(50) | NO | PRI | NULL |
 comment | varchar(50) | YES |  | NULL | 
 date | date | YES | | NULL | 
 id | int | NO | PRI | NULL | 
+
 -> foreign key title references list(title)
 -> foreign key id references userinfo(id)
 
