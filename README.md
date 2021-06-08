@@ -19,4 +19,4 @@ Ajax(JS), Session(Java) 활용
 2. https://jobc.tistory.com/120
 3. http://blog.naver.com/PostView.nhn?blogId=namoyo&logNo=110166980135&parentCategoryNo=82&categoryNo=&viewDate=&isShowPopularPosts=true&from=search
 4. http://www.tcpschool.com/jquery/jq_intro_apply
-5. 
+5. https://rios.tistory.com/entry/Java-%EC%84%B8%EC%85%98Session-%EC%9D%98-%EC%A0%95%EC%9D%98%EC%99%80-%ED%99%9C%EC%9A%A9-%EC%98%88
