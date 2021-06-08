@@ -33,10 +33,10 @@ public class UserRepositoryTests {
         String password = "testPassword";
         User user = User.builder().name(name).email(email).password(password).build();
         entityManager.persist(user);
-//        User fetchedUser = userRepository.findByEmailAndPassword(email, password);
-//        assertThat(fetchedUser.getId(), is(user.getId()));
-//        assertThat(fetchedUser.getName(), is(user.getName()));
-//        assertThat(fetchedUser.getEmail(), is(user.getEmail()));
-//        assertThat(fetchedUser.getPassword(), is(user.getPassword()));
+        User fetchedUser = userRepository.findByEmailAndPassword(email, password);
+        assertThat(fetchedUser.getId(), is(user.getId()));
+        assertThat(fetchedUser.getName(), is(user.getName()));
+        assertThat(fetchedUser.getEmail(), is(user.getEmail()));
+        assertThat(fetchedUser.getPassword(), is(user.getPassword()));
     }
 }
