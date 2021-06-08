@@ -66,7 +66,7 @@ public class UserControllerTests {
     public void login() throws Exception {
         User user = User.builder().id(id).name(name).password(password).build();
         MockHttpServletRequest req = new MockHttpServletRequest();
-        given(userController.login(email, password, req)).willReturn(user);
+//        given(userController.login(email, password, req)).willReturn(user);
         String jsonString = objectMapper.writeValueAsString(user);
         mvc.perform(post("/api/loginCheck")
                 .contentType(MediaType.APPLICATION_JSON)

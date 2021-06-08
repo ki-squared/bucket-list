@@ -23,11 +23,11 @@
       <form id="login-input">
         <h1 class="h1 mb-3 fw-normal">Before You Go</h1>
         <div class="form-floating">
-          <input type="id" class="form-control" id="floatingInput input-email" placeholder="name@example.com">
+          <input type="id" class="form-control" id="email" placeholder="이메일">
           <label for="floatingInput">아이디</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword input-password" placeholder="Password">
+          <input type="password" class="form-control" id="password" placeholder="비밀번">
           <label for="floatingPassword">패스워드</label>
         </div>
     
@@ -37,22 +37,26 @@
     </body>
     <script>
       const $loginBtn = document.getElementById('login-btn');
-      $loginBtn.addEventListener('click', loginCheck);
+      const $email = document.getElementById('email');
+      const $password = document.getElementById('password');
 
-      function loginCheck() {
-        const userinfo = {
-            email: $('#input-email').val(),
-            password: $('#input-password').val()
+      $loginBtn.addEventListener('click', login);
+
+      function login() {
+        const loginInfo = {
+            email: $email.value,
+            password: $password.value
         };
+
+        console.log(loginInfo);
 
         $.ajax({
           type: "POST",
-          url: '/api/loginCheck',
-          data: JSON.stringify(userinfo),
-          success: function() {
-              console.log("here");
-              const uid = '<%=(String)session.getAttribute("user")%>';
-              if(uid=="null") {
+          url: '/api/login',
+          contentType: 'application/json',
+          data: JSON.stringify(loginInfo),
+          success: function(data) {
+              if(data === "") {
                   alert("아이디 또는 비밀번호가 틀렸습니다.");
               } else {
                   window.location.href = "/main";
