@@ -1,10 +1,10 @@
 package kr.ac.jejunu.bucketlist;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -19,8 +19,21 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/fetch")
-    public User fetch(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
+    @PostMapping("/loginCheck")
+    public User login(@RequestBody String email, @RequestBody String password, HttpServletRequest req) {
+        System.out.println(email);
+        System.out.println(password);
+
+        HttpSession session = req.getSession();
+        User loginUser = userRepository.findByEmailAndPassword(email, password);
+        System.out.println(loginUser);
+
+        if(loginUser == null) {
+            session.setAttribute("user", null);
+        } else {
+            session.setAttribute("user", loginUser);
+        }
+
+        return loginUser;
     }
 }
