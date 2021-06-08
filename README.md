@@ -8,3 +8,7 @@ Developer Tools | Spring Boot DevTools, Lombok
 Web | Spring Web
 Template Engines | Thymeleaf
 SQL | Spring Data JPA, H2 Database, MySQL Driver
+
+
+### 로그인 기능 구현
+Ajax(JS), Session(Java) 활용
