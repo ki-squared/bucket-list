@@ -9,6 +9,37 @@ Web | Spring Web
 Template Engines | Thymeleaf
 SQL | Spring Data JPA, H2 Database, MySQL Driver
 
+### DB(MySQL)
+mysql> desc userinfo;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int         | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(32) | YES  |     | NULL    |                |
+| password | varchar(32) | YES  |     | NULL    |                |
+| email    | varchar(32) | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+
+mysql> desc list;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| title | varchar(50) | NO   | PRI | NULL    |       |
+| count | int         | YES  |     | 0       |       |
++-------+-------------+------+-----+---------+-------+
+
+mysql> desc mylist;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| title   | varchar(50) | NO   | PRI | NULL    |       |
+| comment | varchar(50) | YES  |     | NULL    |       |
+| date    | date        | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+-> foreign key title references list(title)
+-> foreign key id references userinfo(id)
+
 
 ### 로그인 기능 구현
 Ajax(JS), Session(Java) 활용
