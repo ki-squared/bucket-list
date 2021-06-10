@@ -86,8 +86,8 @@
     $logoutBtn.addEventListener('click', logout);
 
     $(document).ready(function () {
-        $.get("/api/getName", function setName(userName) {
-            $('#user-name').html(`<h1 class="h2">${userName}의 버킷리스트</h1>`);
+        $.get("/api/getUser", function setName(user) {
+            $('#user-name').html(`<h1 class="h2">${user.name}의 버킷리스트</h1>`);
         });
 
         $.get("/api/list", function (bucketList) {
@@ -98,7 +98,7 @@
                         <td class="list-title">' + value.title + '</td> \
                         <td class="list-content">' + value.comment + '</td> \
                         <td class="list-date">' + value.date + '</td> \
-                        <td><a href="#" class="remove" data=' + value.id + '>X</a></td> \
+                        <td class="text-end"><button type="button" style="margin-right: 12px;" class="btn btn-dark modify" data=' + value.id + '>완료</button><button type="button" class="btn btn-dark remove" style="margin-right: 12px;" data=' + value.id + '>삭제</button></td> \
                     </tr>\
                 ');
             });

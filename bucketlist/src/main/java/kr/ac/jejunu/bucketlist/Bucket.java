@@ -20,5 +20,4 @@ public class Bucket {
     private String comment;
     private Date date;
     private Integer id;
-
 }

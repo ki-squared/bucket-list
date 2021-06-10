@@ -8,9 +8,9 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
-    @GetMapping("/getName")
-    public String getName(HttpSession httpSession) {
+    @GetMapping("/getUser")
+    public User getUser(HttpSession httpSession) {
         User user = (User)httpSession.getAttribute("user");
-        return user.getName();
+        return user;
     }
 }
