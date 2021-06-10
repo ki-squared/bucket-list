@@ -67,19 +67,13 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">버킷리스트</th>
                     <th scope="col">수행 한줄평</th>
                     <th scope="col">완료일</th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td class="list-title">Mark</td>
-                    <td class="list-content">Otto</td>
-                    <td class="list-date">@mdo</td>
-                </tr>
                 </tbody>
             </table>
         </main>
@@ -91,11 +85,39 @@
 
     $logoutBtn.addEventListener('click', logout);
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $.get("/api/getName", function setName(userName) {
             $('#user-name').html(`<h1 class="h2">${userName}의 버킷리스트</h1>`);
-        })
-    })
+        });
+
+        $.get("/api/list", function (bucketList) {
+            $.each(bucketList, function (index, value) {
+                $("tbody").append(
+                    '\
+                    <tr> \
+                        <td class="list-title">' + value.title + '</td> \
+                        <td class="list-content">' + value.comment + '</td> \
+                        <td class="list-date">' + value.date + '</td> \
+                        <td><a href="#" class="remove" data=' + value.id + '>X</a></td> \
+                    </tr>\
+                ');
+            });
+
+            $(".remove").on("click", function (e) {
+                const target = e.currentTarget;
+                const id = $(target).attr("data");
+                const row = $(target).parent().parent();
+                $.ajax({
+                    url: '/api/' + id,
+                    method: 'DELETE',
+                    success: function (result) {
+                        row.remove();
+                    }
+                });
+            });
+        });
+    });
+
     function logout() {
         $.ajax({
             type: "GET",
