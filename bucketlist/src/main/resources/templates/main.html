@@ -40,16 +40,20 @@
                         </div>
                     </li>
                     <li style="margin-bottom: 5px;">
-                        <form>
-                            <input class="form-control me-2" type="search" placeholder="리스트 항목" aria-label="Search" style="width: 134px; height:25px; margin-left: 52px;">
-                            <button class="btn btn-dark" type="submit" style="width: 132px; height: 25px; margin-left: 53px; line-height: 13px;">등록</button>
+                        <form id="id">
+                            <input class="form-control me-2" type="text" placeholder="리스트 항목" aria-label="text" style="width: 134px; height:25px; margin-left: 52px;" id="new-title">
+                            <button class="btn btn-dark" type="submit" style="width: 132px; height: 25px; margin-left: 53px; line-height: 13px;" id="create-button">등록</button>
                         </form>
                     </li>
+                </ul>
+                <ul class="nav">
                     <li class="nav-item m-2">
-                        <div class="nav-link active" style="color: rgb(78, 80, 82)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            <div style="float: right; margin-top: 3px; margin-left: 8px;">추천 버킷리스트</div>
-                        </div>
+                        <a class="nav-link active" aria-current="page" href="/allbuckets" style="color:rgb(78, 80, 82)">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <div style="float: right; margin-top: 3px; margin-left: 8px;">모든 버킷리스트</div>
+                            </div>
+                        </a>
                     </li>
                 </ul>
                 <ul class="nav">
@@ -82,41 +86,68 @@
 </body>
 <script>
     const $logoutBtn = document.getElementById('logout-btn');
+    const $createBtn = document.getElementById('create-button');
+    const $createInput = document.getElementById('new-title');
 
     $logoutBtn.addEventListener('click', logout);
+    $createBtn.addEventListener('click', create);
 
     $(document).ready(function () {
         $.get("/api/getUser", function setName(user) {
             $('#user-name').html(`<h1 class="h2">${user.name}의 버킷리스트</h1>`);
         });
 
-        $.get("/api/list", function (bucketList) {
-            $.each(bucketList, function (index, value) {
-                $("tbody").append(
-                    '\
-                    <tr class="align-middle"> \
-                        <td class="list-title">' + value.title + '</td> \
-                        <td class="list-content">' + value.comment + '</td> \
-                        <td class="list-date">' + value.date + '</td> \
-                        <td class="text-end"><button type="button" style="margin-right: 12px;" class="btn btn-dark modify" data=' + value.id + '>완료</button><button type="button" class="btn btn-dark remove" style="margin-right: 12px;" data=' + value.id + '>삭제</button></td> \
-                    </tr>\
-                ');
-            });
-
-            $(".remove").on("click", function (e) {
-                const target = e.currentTarget;
-                const id = $(target).attr("data");
-                const row = $(target).parent().parent();
-                $.ajax({
-                    url: '/api/' + id,
-                    method: 'DELETE',
-                    success: function (result) {
-                        row.remove();
-                    }
-                });
-            });
-        });
+        // $.get("/api/list", function (bucketList) {
+        //     $.each(bucketList, function (index, value) {
+        //         $("tbody").append(
+        //             '\
+        //             <tr class="align-middle"> \
+        //                 <td class="list-title">' + value.title + '</td> \
+        //                 <td class="list-content">' + value.comment + '</td> \
+        //                 <td class="list-date">' + value.date + '</td> \
+        //                 <td class="text-end"><button type="button" style="margin-right: 12px;" class="btn btn-dark modify" data=' + value.id + '>완료</button><button type="button" class="btn btn-dark remove" style="margin-right: 12px;" data=' + value.id + '>삭제</button></td> \
+        //             </tr>\
+        //         ');
+        //     });
+        //
+        //     $(".modify").on("click", function (e) {
+        //         const id = $(e.currentTarget).attr("data");
+        //         console.log(id);
+        //         window.location.href = "/edit?id=" + id;
+        //     });
+        //
+        //     $(".remove").on("click", function (e) {
+        //         const target = e.currentTarget;
+        //         const id = $(target).attr("data");
+        //         const row = $(target).parent().parent();
+        //         $.ajax({
+        //             url: '/api/' + id,
+        //             method: 'DELETE',
+        //             success: function (result) {
+        //                 row.remove();
+        //             }
+        //         });
+        //     });
+        // });
     });
+
+    function create() {
+        const bucket = {
+            id: $('#id').val(),
+            title: $createInput.value,
+            count: 0
+        }
+        $.ajax({
+            type: "POST",
+            url: "/api/save",
+            data: JSON.stringify(bucket),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+                alert(`${bucket.title} 버킷리스트 등록 완료`);
+            }
+        })
+    }
 
     function logout() {
         $.ajax({

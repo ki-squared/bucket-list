@@ -1,9 +1,7 @@
 package kr.ac.jejunu.bucketlist;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -13,9 +11,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BucketController {
     private final BucketRepository bucketRepository;
-    @GetMapping("/list")
-    public List<Bucket> list(HttpSession httpSession) {
-        User user = (User)httpSession.getAttribute("user");
-        return bucketRepository.findListById(user.getId());
+
+    @GetMapping("/listAll")
+    public List<Bucket> listAll() {
+        return bucketRepository.findAll();
+    }
+
+    @PostMapping("/save")
+    public Bucket create(@RequestBody Bucket bucket) {
+        return bucketRepository.save(bucket);
     }
 }

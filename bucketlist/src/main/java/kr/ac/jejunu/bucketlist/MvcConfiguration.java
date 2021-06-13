@@ -10,5 +10,6 @@ public class MvcConfiguration implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login");
         registry.addViewController("/main");
+        registry.addViewController("/allbuckets");
     }
 }

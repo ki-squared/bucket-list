@@ -4,3 +4,7 @@ spring:
     username: root
     url: jdbc:mysql://localhost/kakao?characterEncoding=utf-8&serverTimezone=UTC
     password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update

@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BucketRepository extends JpaRepository<Bucket, Integer> {
-  @Query("select list from mylist list where list.id=?1")
-  List<Bucket> findListById(Integer id);
+
 }
