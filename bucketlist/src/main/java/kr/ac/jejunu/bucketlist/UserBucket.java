@@ -1,5 +1,6 @@
 package kr.ac.jejunu.bucketlist;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,18 +13,21 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="userbucketlist")
+@Entity(name="userbucket")
 public class UserBucket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String review;
-    private Date dueDate;
-    private Date finishedDate;
+    private Date due_date;
+    private Date finished_date;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     @ManyToOne
+    @JsonIgnore
     private Bucket bucket;
 }

@@ -83,31 +83,28 @@
                     <tr class="align-middle" id=' + value.id + '> \
                         <td class="list-title">' + value.title + '</td> \
                         <td class="list-count">' + value.count + '</td> \
-                        <td class="text-end"><button type="button" style="margin-right: 12px;" class="btn btn-dark register" id=' + value.id + '/' + value.title + '/' + value.count +'>나도 등록하기</button></td> \
+                        <td class="text-end"><button type="submit" style="margin-right: 12px;" class="btn btn-dark register">나도 등록하기</button></td> \
                     </tr>\
                 ');
             });
 
             $(".register").on("click", function(e) {
-                const bucketInfo = e.target.id.split('/');
-                const bucket = {
-                    id: bucketInfo[0],
-                    title: bucketInfo[1],
-                    count: bucketInfo[2]
-                };
-
-                $.ajax({
-                    type: "POST",
-                    url: '/api/register',
-                    data: JSON.stringify(bucket),
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function() {
-                        alert(`등록되었습니다.`);
-                        window.location.href = "/main";
-                    }
-
-                })
+                $.get("/api/getUser", function(userInfo) {
+                    const ids = {userID: userInfo.id, bucketID: e.target.parentNode.parentNode.id};
+                    console.log(ids);
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/register',
+                        data: JSON.stringify(ids),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        success: function() {
+                            alert(`내 버킷리스트 목록 추가!`);
+                            window.location.href = "/main";
+                        }
+                    });
+                });
             });
         });
     });

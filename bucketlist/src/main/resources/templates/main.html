@@ -92,10 +92,12 @@
 
     $logoutBtn.addEventListener('click', logout);
     $createBtn.addEventListener('click', create);
+    let User = {};
 
     $(document).ready(function () {
         $.get("/api/getUser", function setName(user) {
-            $('#user-name').html(`<h1 class="h2">${user.name}의 버킷리스트</h1>`);
+            User = user;
+            $('#user-name').html(`<h1 class="h2">${User.name}의 버킷리스트</h1>`);
         });
 
         // $.get("/api/list", function (bucketList) {
@@ -134,22 +136,38 @@
     });
 
     function create() {
-        const bucket = {
-            id: $('#id').val(),
-            title: $createInput.value,
-            count: 0
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/api/save",
-            data: JSON.stringify(bucket),
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function () {
-                alert(`${bucket.title} 버킷리스트 등록 완료`);
+        if($createInput.value !== "") {
+            const bucket = {
+                id: $('#id').val(),
+                title: $createInput.value,
+                count: 0
             }
-        })
+
+            $.ajax({
+                type: "POST",
+                url: "/api/save",
+                data: JSON.stringify(bucket),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                success: function (bucket) {
+                    alert(`${bucket.title} 버킷리스트 등록 성공!`);
+                    const ids = {userID: User.id, bucketID: bucket.id};
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/register',
+                        data: JSON.stringify(ids),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        success: function() {
+                            alert(`내 버킷리스트 목록 추가!`);
+                            window.location.href = "/main";
+                        }
+                    });
+                }
+            });
+        }
     }
 
     function logout() {

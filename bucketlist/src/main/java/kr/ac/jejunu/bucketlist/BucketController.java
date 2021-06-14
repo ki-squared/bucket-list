@@ -2,8 +2,6 @@ package kr.ac.jejunu.bucketlist;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -11,6 +9,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BucketController {
     private final BucketRepository bucketRepository;
+
+    @GetMapping("/getBucket/{bucketID}")
+    public Bucket getBucket(@PathVariable Integer bucketID) {
+        return bucketRepository.findById(bucketID).get();
+    }
 
     @GetMapping("/listAll")
     public List<Bucket> listAll() {

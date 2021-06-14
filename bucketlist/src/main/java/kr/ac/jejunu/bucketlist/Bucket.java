@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "bucketlist")
+@Entity(name = "bucket")
 public class Bucket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
