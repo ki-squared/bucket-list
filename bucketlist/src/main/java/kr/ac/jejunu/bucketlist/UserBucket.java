@@ -5,20 +5,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "bucketlist")
-public class Bucket {
+@Entity(name="userbucketlist")
+public class UserBucket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String title;
-    private Integer count;
+    private String review;
+    private Date dueDate;
+    private Date finishedDate;
+
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Bucket bucket;
 }
