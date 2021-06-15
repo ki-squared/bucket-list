@@ -95,10 +95,66 @@
     let User = {};
 
     $(document).ready(function () {
-        $.get("/api/getUser", function setName(user) {
-            User = user;
-            $('#user-name').html(`<h1 class="h2">${User.name}의 버킷리스트</h1>`);
+        $.ajax({
+            type: "GET",
+            url: "/api/getUser",
+            async: false,
+            success: function(user) {
+                User = user;
+                $('#user-name').html(`<h1 class="h2">${User.name}의 버킷리스트</h1>`);
+                $.ajax({
+                    type: "GET",
+                    url: "/api/list/"+User.id,
+                    async: false,
+                    success: function(bucketlist) {
+                        $.each(bucketlist, function (index, value) {
+                            $("tbody").append(
+                                '\
+                                <tr class="align-middle"> \
+                                    <td class="bucket-title">' + value.title + '</td> \
+                                    <td class="bucket-review">' + value.review + '</td> \
+                                    <td class="due-date">\
+                                        <input type="hidden" id=' + value.id + '>\
+                                        <input type="date" name="due-date" value=' + value.due_date + '>\
+                                        <button class="btn btn-dark due-btn" type="submit">확정</button>\
+                                    </td> \
+                                    <td class="finished-date">' + value.finished_date + '</td> \
+                                    <td class="text-end">\
+                                    <button type="button" style="margin-right: 10px;" class="btn btn-dark modify" data=' + value.id + '>수정</button>' +
+                                '   <button type="button" style="margin-right: 10px;" class="btn btn-dark completed" data=' + value.id + '>완료</button>' +
+                                '   <button type="button" class="btn btn-dark remove" style="margin-right: 12px;" data=' + value.id + '>삭제</button></td> \
+                                </tr>\
+                            ');
+                        });
+                    }
+                })
+            }
         });
+
+        $(".due-btn").on("click", function(e) {
+            const formData = e.currentTarget.parentNode;
+            const dueInfo = {
+                userBucketID: formData.children[0].id,
+                dueDate: formData.children[1].value
+            }
+            console.log(dueInfo);
+            $.ajax({
+                type: "POST",
+                url: '/api/setDueDate',
+                data: JSON.stringify(dueInfo),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                success: function() {
+                    alert("마감 예정일을 등록했습니다.")
+                }
+            })
+        });
+
+        // $.get("/api/getUser", function setName(user) {
+        //     User = user;
+        //     $('#user-name').html(`<h1 class="h2">${User.name}의 버킷리스트</h1>`);
+        // });
 
         // $.get("/api/list", function (bucketList) {
         //     $.each(bucketList, function (index, value) {
@@ -134,6 +190,8 @@
         //     });
         // });
     });
+
+
 
     function create() {
         if($createInput.value !== "") {
