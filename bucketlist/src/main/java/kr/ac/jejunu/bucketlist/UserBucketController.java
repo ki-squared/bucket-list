@@ -40,8 +40,7 @@ public class UserBucketController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = dueInfos.get("dueDate");
         Date dueDate = new Date(sdf.parse(date).getTime());
-        Timestamp jdbcDueDate = new Timestamp(dueDate.getTime());
-
-        userBucket.setDue_date(jdbcDueDate);
+        userBucket.setDue_date(dueDate);
+        userBucketRepository.save(userBucket);
     }
 }

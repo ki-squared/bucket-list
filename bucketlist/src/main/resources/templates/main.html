@@ -108,6 +108,9 @@
                     async: false,
                     success: function(bucketlist) {
                         $.each(bucketlist, function (index, value) {
+                            if(value.due_date != null) {
+                                value.due_date = getDate(value.due_date);
+                            }
                             $("tbody").append(
                                 '\
                                 <tr class="align-middle"> \
@@ -191,7 +194,10 @@
         // });
     });
 
+    function getDate(date) {
+        return date.split("T", 1)[0];
 
+    }
 
     function create() {
         if($createInput.value !== "") {
