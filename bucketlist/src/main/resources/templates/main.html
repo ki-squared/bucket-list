@@ -108,11 +108,13 @@
                     async: false,
                     success: function(bucketlist) {
                         $.each(bucketlist, function (index, value) {
+                            let display = "";
                             if(value.due_date != null) {
                                 value.due_date = getDate(value.due_date);
                             }
                             if(value.finished_date != null) {
                                 value.finished_date = getDate(value.finished_date);
+                                display = "none";
                             }
                             $("tbody").append(
                                 '\
@@ -126,7 +128,7 @@
                                     </td> \
                                     <td class="finished-date">' + value.finished_date + '</td> \
                                     <td class="text-end">\
-                                    <button type="button" style="margin-right: 10px;" class="btn btn-dark modify" data=' + value.id + '>완료</button>' +
+                                    <button type="button" style="margin-right: 10px; display:' + display + ' " class="btn btn-dark modify" data=' + value.id + '>완료</button>' +
                                 '   <button type="button" class="btn btn-dark remove" style="margin-right: 12px;" data=' + value.id + '>삭제</button></td> \
                                 </tr>\
                             ');
