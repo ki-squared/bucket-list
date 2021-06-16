@@ -73,7 +73,7 @@
                 <tr>
                     <th scope="col">버킷리스트</th>
                     <th scope="col">수행 한줄평</th>
-                    <th scope="col">예정 마감일</th>
+                    <th scope="col">예정 마감일(-1)</th>
                     <th scope="col">완료일</th>
                     <th scope="col"></th>
                 </tr>
@@ -111,6 +111,9 @@
                             if(value.due_date != null) {
                                 value.due_date = getDate(value.due_date);
                             }
+                            if(value.finished_date != null) {
+                                value.finished_date = getDate(value.finished_date);
+                            }
                             $("tbody").append(
                                 '\
                                 <tr class="align-middle"> \
@@ -123,8 +126,7 @@
                                     </td> \
                                     <td class="finished-date">' + value.finished_date + '</td> \
                                     <td class="text-end">\
-                                    <button type="button" style="margin-right: 10px;" class="btn btn-dark modify" data=' + value.id + '>수정</button>' +
-                                '   <button type="button" style="margin-right: 10px;" class="btn btn-dark completed" data=' + value.id + '>완료</button>' +
+                                    <button type="button" style="margin-right: 10px;" class="btn btn-dark modify" data=' + value.id + '>완료</button>' +
                                 '   <button type="button" class="btn btn-dark remove" style="margin-right: 12px;" data=' + value.id + '>삭제</button></td> \
                                 </tr>\
                             ');
@@ -154,30 +156,12 @@
             })
         });
 
-        // $.get("/api/getUser", function setName(user) {
-        //     User = user;
-        //     $('#user-name').html(`<h1 class="h2">${User.name}의 버킷리스트</h1>`);
-        // });
 
-        // $.get("/api/list", function (bucketList) {
-        //     $.each(bucketList, function (index, value) {
-        //         $("tbody").append(
-        //             '\
-        //             <tr class="align-middle"> \
-        //                 <td class="bucket-title">' + value.title + '</td> \
-        //                 <td class="bucket-content">' + value.comment + '</td> \
-        //                 <td class="due-date">' + value.date + '</td> \
-        //                 <td class="finished-date">' + value.date + '</td> \
-        //                 <td class="text-end"><button type="button" style="margin-right: 12px;" class="btn btn-dark modify" data=' + value.id + '>완료</button><button type="button" class="btn btn-dark remove" style="margin-right: 12px;" data=' + value.id + '>삭제</button></td> \
-        //             </tr>\
-        //         ');
-        //     });
-        //
-        //     $(".modify").on("click", function (e) {
-        //         const id = $(e.currentTarget).attr("data");
-        //         console.log(id);
-        //         window.location.href = "/edit?id=" + id;
-        //     });
+            $(".modify").on("click", function (e) {
+                const id = $(e.currentTarget).attr("data");
+                console.log(id);
+                window.location.href = "/edit?id=" + id;
+            });
         //
         //     $(".remove").on("click", function (e) {
         //         const target = e.currentTarget;

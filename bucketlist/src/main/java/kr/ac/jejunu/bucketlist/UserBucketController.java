@@ -43,4 +43,15 @@ public class UserBucketController {
         userBucket.setDue_date(dueDate);
         userBucketRepository.save(userBucket);
     }
+
+    @PostMapping("/setComplete")
+    public void setCompletedBucket(@RequestBody Map<String, String> reviewInfos) {
+        UserBucket userBucket = userBucketRepository.getById(Integer.parseInt(reviewInfos.get("userBucketID")));
+        String review = reviewInfos.get("review");
+        Date finishedDate = new Date(System.currentTimeMillis());
+        userBucket.setReview(review);
+        userBucket.setFinished_date(finishedDate);
+        System.out.println(userBucket);
+        userBucketRepository.save(userBucket);
+    }
 }
