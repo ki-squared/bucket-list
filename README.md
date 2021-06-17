@@ -18,26 +18,23 @@ name | varchar(32) | YES |  | NULL |
 password | varchar(32) | YES |  | NULL | 
 email | varchar(32) | YES |  | NULL | 
 
-mysql> desc list;
+mysql> desc bucket;
 Field | Type | Null | key | Default | Extra
 ----- | ----- | ----- | ----- | ----- | -----
-title | varchar(50) | NO | PRI | NULL | 
+id | int | NO | PRI | NULL | auto_increment
+title | varchar(50) | NO |  | NULL | 
 count | int | YES |  | 0 | 
 
-mysql> desc mylist;
+mysql> desc userbucket;
 Field | Type | Null | key | Default | Extra
 ----- | ----- | ----- | ----- | ----- | -----
-title | varchar(50) | NO | PRI | NULL | 
-comment | varchar(50) | YES |  | NULL | 
-date | date | YES | | NULL | 
-id | int | NO | PRI | NULL | 
-
--> foreign key title references list(title)
--> foreign key id references userinfo(id)
-
-
-### 로그인 기능 구현
-Ajax(JS), Session(Java) 활용
+id | int | NO | PRI | NULL | auto_increment
+due_date | datetime(6) | YES |  | NULL | 
+finished_date | datetime(6) | YES |  | NULL | 
+review | varchar(255) | YES |  | NULL | 
+bucket_id | int | YES | MUL | NULL | 
+user_id | int | YES | MUL | NULL | 
+title | varchar(255) | YES |  | NULL | 
 
 
 ### Reference
