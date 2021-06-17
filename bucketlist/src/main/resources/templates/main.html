@@ -144,7 +144,6 @@
                 userBucketID: formData.children[0].id,
                 dueDate: formData.children[1].value
             }
-            console.log(dueInfo);
             $.ajax({
                 type: "POST",
                 url: '/api/setDueDate',
@@ -159,25 +158,24 @@
         });
 
 
-            $(".modify").on("click", function (e) {
-                const id = $(e.currentTarget).attr("data");
-                console.log(id);
-                window.location.href = "/edit?id=" + id;
+        $(".modify").on("click", function (e) {
+            const id = $(e.currentTarget).attr("data");
+            console.log(id);
+            window.location.href = "/edit?id=" + id;
+        });
+
+        $(".remove").on("click", function (e) {
+            const target = e.currentTarget;
+            const id = $(target).attr("data");
+            const row = $(target).parent().parent();
+            $.ajax({
+                url: '/api/' + id,
+                method: 'DELETE',
+                success: function (result) {
+                    row.remove();
+                }
             });
-        //
-        //     $(".remove").on("click", function (e) {
-        //         const target = e.currentTarget;
-        //         const id = $(target).attr("data");
-        //         const row = $(target).parent().parent();
-        //         $.ajax({
-        //             url: '/api/' + id,
-        //             method: 'DELETE',
-        //             success: function (result) {
-        //                 row.remove();
-        //             }
-        //         });
-        //     });
-        // });
+        });
     });
 
     function getDate(date) {

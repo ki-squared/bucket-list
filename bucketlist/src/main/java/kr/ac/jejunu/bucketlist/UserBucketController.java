@@ -54,4 +54,13 @@ public class UserBucketController {
         System.out.println(userBucket);
         userBucketRepository.save(userBucket);
     }
+
+    @DeleteMapping("/{userbucketID}")
+    public void delete(@PathVariable Integer userbucketID) {
+        UserBucket userBucket = userBucketRepository.findById(userbucketID).get();
+        Bucket bucket = userBucket.getBucket();
+        bucket.setCount(bucket.getCount()-1);
+//        bucket.setCount((int)userBucketRepository.countByTitle(bucket.getTitle()));
+        userBucketRepository.delete(userBucket);
+    }
 }

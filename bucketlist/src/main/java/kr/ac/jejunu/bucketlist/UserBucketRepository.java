@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface UserBucketRepository extends JpaRepository<UserBucket, Integer> {
     List findByUser_Id(Integer userID);
+
+    long countByTitle(String title);
 }
