@@ -12,14 +12,14 @@
 <body class="text-center" style="padding-top: 20%; padding-right: 20%; padding-left: 20%;">
 <div id="Content">
     <input id="id" type="hidden" name="id"/>
-    <form onsubmit="return save()">
+    <form>
         <fieldset>
             <legend>버킷리스트에 관한 나의 이야기</legend>
             <p>
                 <input type="text" id="review" name="review" class="form-control"/>
             </p>
             <p>
-                <input type="submit" value="저장"/>
+                <button type="button" class="btn btn-dark" id="submit-btn">저장</button>
             </p>
         </fieldset>
     </form>
@@ -34,13 +34,13 @@
         return params;
     }
 
+    $("#submit-btn").on("click", save);
+
     function save() {
-        console.log(getUrlParams().id);
         const reviewInfo = {
             userBucketID: getUrlParams().id,
             review: $('#review').val()
         };
-        console.log(reviewInfo);
         $.ajax({
             type: "POST",
             url: '/api/setComplete',
@@ -49,10 +49,10 @@
             contentType: "application/json; charset=utf-8",
             async: false,
             success: function() {
-                alert("버킷리스트 완수!");
-                window.location.href = "/main";
             }
         })
+        alert("버킷리스트 완수!");
+        window.location.href = "/main";
     }
 </script>
 </html>

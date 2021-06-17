@@ -3,11 +3,8 @@ package kr.ac.jejunu.bucketlist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +48,6 @@ public class UserBucketController {
         Date finishedDate = new Date(System.currentTimeMillis());
         userBucket.setReview(review);
         userBucket.setFinished_date(finishedDate);
-        System.out.println(userBucket);
         userBucketRepository.save(userBucket);
     }
 
